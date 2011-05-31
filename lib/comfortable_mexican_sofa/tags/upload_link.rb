@@ -1,18 +1,19 @@
-class ComfortableMexicanSofa::Tag::UploadImage
+class ComfortableMexicanSofa::Tag::UploadLink
   include ComfortableMexicanSofa::Tag
   
   def self.regex_tag_signature(label = nil)
     label ||= /[\w\-\.]+/
-    /\{\{\s*cms:upload:(#{label}):image:?(.*?)\s*\}\}/
+    /\{\{\s*cms:upload:(#{label}):link:?(.*?)\s*\}\}/
   end
   
   def content
     return nil if upload.nil?
-    alt = if params.empty?
+    text = if params.empty?
       upload.file_file_name
     else
       params
     end
-    "<img src='#{upload.file.url}' alt='#{alt}' />"
+    "<a href='#{upload.file.url}'>#{text}</a>"
   end
+  
 end
